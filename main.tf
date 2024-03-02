@@ -22,7 +22,7 @@ resource "cloudflare_record" "record" {
   type     = each.value.type
   value    = each.value.value
   proxied  = each.value.proxied
-  zone_id  = lookup(local.zones, regex(".*?([^.]+\\.[^.]+)$", each.key)[0])
+  zone_id  = local.zones != null ? lookup(local.zones, regex(".*?([^.]+\\.[^.]+)$", each.key)[0]) : null
   lifecycle {
     ignore_changes = [zone_id]
   }
